@@ -1,7 +1,7 @@
 package bot
 
 import (
-	"github.com/altfoxie/labrys-bot/internal/i18n"
+	"github.com/altfoxie/labrys-bot/i18n"
 
 	"github.com/mymmrac/telego"
 	tu "github.com/mymmrac/telego/telegoutil"

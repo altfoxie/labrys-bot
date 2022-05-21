@@ -3,8 +3,8 @@ package bot
 import (
 	"strings"
 
-	"github.com/altfoxie/labrys-bot/internal/i18n"
-	"github.com/altfoxie/labrys-bot/internal/storage"
+	"github.com/altfoxie/labrys-bot/i18n"
+	"github.com/altfoxie/labrys-bot/storage"
 
 	"github.com/mymmrac/telego"
 	tu "github.com/mymmrac/telego/telegoutil"

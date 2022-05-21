@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
-	"github.com/altfoxie/labrys-bot/internal/bot"
-	"github.com/altfoxie/labrys-bot/internal/storage"
+	"github.com/altfoxie/labrys-bot/bot"
+	"github.com/altfoxie/labrys-bot/storage"
 
 	"github.com/sirupsen/logrus"
 )

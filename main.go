@@ -1,9 +1,10 @@
 package main
 
 import (
-	"labrys-bot/internal/bot"
-	"labrys-bot/internal/storage"
 	"os"
+
+	"github.com/altfoxie/labrys-bot/internal/bot"
+	"github.com/altfoxie/labrys-bot/internal/storage"
 
 	"github.com/sirupsen/logrus"
 )

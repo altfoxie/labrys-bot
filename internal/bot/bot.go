@@ -2,7 +2,7 @@
 package bot
 
 import (
-	"labrys-bot/internal/storage"
+	"github.com/altfoxie/labrys-bot/internal/storage"
 
 	"github.com/mymmrac/telego"
 )

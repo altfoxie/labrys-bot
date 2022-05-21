@@ -1,9 +1,10 @@
 package bot
 
 import (
-	"labrys-bot/internal/i18n"
-	"labrys-bot/internal/storage"
 	"strings"
+
+	"github.com/altfoxie/labrys-bot/internal/i18n"
+	"github.com/altfoxie/labrys-bot/internal/storage"
 
 	"github.com/mymmrac/telego"
 	tu "github.com/mymmrac/telego/telegoutil"

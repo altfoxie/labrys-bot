@@ -8,7 +8,6 @@ import (
 
 	"github.com/mymmrac/telego"
 	tu "github.com/mymmrac/telego/telegoutil"
-	"github.com/samber/lo"
 	"github.com/sirupsen/logrus"
 )
 
@@ -38,12 +37,19 @@ func (b *Bot) onMessage(message *telego.Message) error {
 	locale := i18n.Get(message.From.LanguageCode)
 	switch command {
 	case "start":
+		logrus.WithField("user", message.From.ID).Info("Message: start.")
 		return b.onStart(locale, message, arg)
-	default:
-		return lo.T2(b.SendMessage(
-			tu.Message(tu.ID(message.Chat.ID), locale.UnknownMessage),
-		)).B
+
+	case "help":
+		logrus.WithField("user", message.From.ID).Info("Message: help.")
+		return b.onHelp(locale, message, arg)
+
+	case "addpasta":
+		logrus.WithField("user", message.From.ID).Info("Message: add copypasta.")
+		return b.onAddPasta(locale, message, arg)
 	}
+
+	return nil
 }
 
 // Inline queries handler.
@@ -64,7 +70,7 @@ func (b *Bot) onInlineQuery(query *telego.InlineQuery) error {
 		return b.AnswerInlineQuery(
 			tu.InlineQuery(query.ID).
 				WithSwitchPmText(locale.CommandsList).
-				WithSwitchPmParameter("inline"),
+				WithSwitchPmParameter("help"),
 		)
 	}
 }

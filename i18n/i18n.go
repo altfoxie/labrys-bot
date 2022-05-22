@@ -3,11 +3,16 @@ package i18n
 
 // Locale represents localized messages.
 type Locale struct {
-	Greeting           string
-	UnknownMessage     string
-	CommandsList       string
-	InlineCommandsHelp string
-	NothingFound       string
+	Greeting string
+	Help     string
+
+	NoName     string
+	NoReply    string
+	VoiceAdded string
+	PastaAdded string
+
+	NothingFound string
+	CommandsList string
 }
 
 // Get returns locale for given language.

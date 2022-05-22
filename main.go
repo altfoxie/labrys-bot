@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"strconv"
 
 	"github.com/altfoxie/labrys-bot/bot"
 	"github.com/altfoxie/labrys-bot/storage"
@@ -15,7 +16,16 @@ func main() {
 		logrus.WithError(err).Fatal("Failed to initialize storage.")
 	}
 
-	b, err := bot.New(s, os.Getenv("TOKEN"))
+	id, _ := strconv.ParseInt(os.Getenv("CHANNEL"), 10, 64)
+	if id == 0 {
+		logrus.Warn("Channel ID is not set.")
+	}
+
+	b, err := bot.New(bot.Params{
+		Token:     os.Getenv("TOKEN"),
+		Storage:   s,
+		ChannelID: id,
+	})
 	if err != nil {
 		logrus.WithError(err).Fatal("Failed to initialize bot.")
 	}

@@ -3,6 +3,7 @@ package storage
 import (
 	"strconv"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/mymmrac/telego"
@@ -25,16 +26,23 @@ type Pasta struct {
 	// Content is a text of the copypasta.
 	Content string `db:"content"`
 	// MessageID is a unique identifier of the message.
-	MessageID uint64 `db:"message_id"`
+	MessageID int `db:"message_id"`
 }
 
 // InlineResult returns inline query result for the copypasta.
 func (p Pasta) InlineResult() telego.InlineQueryResult {
-	return tu.ResultArticle(
+	result := tu.ResultArticle(
 		strconv.FormatUint(p.ID, 10),
 		p.Name,
 		tu.TextMessage(p.Content),
 	)
+	// idk why 135 just works
+	if utf8.RuneCountInString(p.Content) > 135 {
+		result.Description = string([]rune(p.Content)[:135])
+	} else {
+		result.Description = p.Content
+	}
+	return result
 }
 
 // PastaMatch represents a matched copypasta.
@@ -82,7 +90,8 @@ func (repo *PastasRepository) Search(query string) (pastas []PastaMatch, err err
 			similarity(lower(pastas.content), lower(?)) AS content_score
 		FROM pastas_fts JOIN pastas ON pastas_fts.rowid = pastas.id
 		WHERE name_score >= 0.25 OR content_score >= 0.5
-		ORDER BY content_score DESC, name_score DESC LIMIT 50`,
+		ORDER BY CASE WHEN name_score > content_SCORE THEN name_score ELSE content_score END DESC
+		LIMIT 50`,
 		l, l,
 	)
 }

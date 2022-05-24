@@ -25,7 +25,7 @@ type Voice struct {
 	// FileID is a unique identifier of the file, stored on the Telegram servers.
 	FileID string `db:"file_id"`
 	// MessageID is a unique identifier of the message.
-	MessageID uint64 `db:"message_id"`
+	MessageID int `db:"message_id"`
 }
 
 func (v Voice) InlineResult() telego.InlineQueryResult {

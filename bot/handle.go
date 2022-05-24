@@ -44,6 +44,10 @@ func (b *Bot) onMessage(message *telego.Message) error {
 		logrus.WithField("user", message.From.ID).Info("Message: help.")
 		return b.onHelp(locale, message, arg)
 
+	case "addvoice":
+		logrus.WithField("user", message.From.ID).Info("Message: add voice.")
+		return b.onAddVoice(locale, message, arg)
+
 	case "addpasta":
 		logrus.WithField("user", message.From.ID).Info("Message: add copypasta.")
 		return b.onAddPasta(locale, message, arg)

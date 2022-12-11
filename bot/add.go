@@ -68,6 +68,9 @@ func (b *Bot) onAddVoice(locale *i18n.Locale, message *telego.Message, arg strin
 		"-metadata", "album=Labrys",
 		"-metadata", "author=Labrys",
 		"-metadata", "title=@LabrysBot",
+		"-vn",
+		"-ac", "1",
+		"-ar", "48000",
 		"-c:a", "libopus",
 		temp,
 	)

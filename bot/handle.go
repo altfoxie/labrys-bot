@@ -27,11 +27,18 @@ func (b *Bot) handle(update telego.Update) {
 
 // Messages handler.
 func (b *Bot) onMessage(message *telego.Message) error {
-	command, args := tu.ParseCommand(message.Text)
-	arg := strings.Join(args, " ")
+	if !strings.HasPrefix(message.Text, "/") {
+		return nil
+	}
+
+	var botUsername string
+	command, arg, _ := strings.Cut(message.Text, " ")
+	command, botUsername, _ = strings.Cut(command, "@")
+	command = command[1:]
+
 	locale := i18n.Get(message.From.LanguageCode)
 
-	group := strings.HasSuffix(strings.ToLower(command), "@"+strings.ToLower(b.me.Username))
+	group := strings.ToLower(botUsername) == strings.ToLower(b.me.Username)
 
 	switch command {
 	case "start":

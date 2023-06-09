@@ -31,7 +31,7 @@ func (b *Bot) onMessage(message *telego.Message) error {
 	arg := strings.Join(args, " ")
 	locale := i18n.Get(message.From.LanguageCode)
 
-	group := strings.HasSuffix(strings.ToLower(command), "@"+b.me.Username)
+	group := strings.HasSuffix(strings.ToLower(command), "@"+strings.ToLower(b.me.Username))
 
 	switch command {
 	case "start":

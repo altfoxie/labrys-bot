@@ -27,22 +27,24 @@ func (b *Bot) handle(update telego.Update) {
 
 // Messages handler.
 func (b *Bot) onMessage(message *telego.Message) error {
-	// Handle only private messages.
-	if message.Chat.Type != "private" {
-		return nil
-	}
-
 	command, args := tu.ParseCommand(message.Text)
 	arg := strings.Join(args, " ")
 	locale := i18n.Get(message.From.LanguageCode)
+
+	group := strings.HasSuffix(strings.ToLower(command), "@"+b.me.Username)
+
 	switch command {
 	case "start":
-		logrus.WithField("user", message.From.ID).Info("Message: start.")
-		return b.onStart(locale, message, arg)
+		if message.Chat.Type == "private" || group {
+			logrus.WithField("user", message.From.ID).Info("Message: start.")
+			return b.onStart(locale, message, arg)
+		}
 
 	case "help":
-		logrus.WithField("user", message.From.ID).Info("Message: help.")
-		return b.onHelp(locale, message, arg)
+		if message.Chat.Type == "private" || group {
+			logrus.WithField("user", message.From.ID).Info("Message: help.")
+			return b.onHelp(locale, message, arg)
+		}
 
 	case "addvoice":
 		logrus.WithField("user", message.From.ID).Info("Message: add voice.")
